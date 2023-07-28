@@ -9,29 +9,34 @@
             color: #E0E0E0;
             display: flex;
             justify-content: center;
+            align-items: center;
             height: 100vh;
             margin: 0;
-            align-items: center;
         }
 
         body.light-mode {
             background-color: #FFF;
             color: #000;
         }
-        #editor {
+
+        #editor-container {
             width: 75%;
-            margin: 0 auto;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .cke_maximized {
-            max-width: 75% !important;
+            max-width: 100% !important;
             margin: auto !important;
         }
-
     </style>
 </head>
 <body class="dark-mode">
-<textarea name="editor" id="editor"></textarea>
+<div id="editor-container">
+    <textarea name="editor" id="editor"></textarea>
+</div>
 <button id="dark-mode-toggle">Alternar Modo Claro</button>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
