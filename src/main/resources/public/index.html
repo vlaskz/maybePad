@@ -2,59 +2,63 @@
 <html>
 <head>
     <title>MaybePad</title>
-    <script src="https://cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/4.16.2/full-all/ckeditor.js"></script>
+    <style>
+        body {
+            background-color: #191919;
+            color: #E0E0E0;
+        }
+
+        body.light-mode {
+            background-color: #FFF;
+            color: #000;
+        }
+        #editor {
+            width: 75%;
+            margin: 0 auto;
+        }
+
+        .cke_maximized {
+            max-width: 75% !important;
+            margin: auto !important;
+        }
+
+    </style>
 </head>
-<body>
+<body class="dark-mode">
 <textarea name="editor" id="editor"></textarea>
+<button id="dark-mode-toggle">Alternar Modo Claro</button>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
-    var editor = CKEDITOR.replace('editor');
-    var lastSavedContent;
-
-    CKEDITOR.on('instanceReady',
-        function( evt )
-        {
-            var editor = evt.editor;
-            editor.execCommand('maximize');
-        });
+    var editor = CKEDITOR.replace('editor', {
+        // Aplicar estilos CSS escuros ao conteúdo do editor
+        contentsCss: [
+            'body {background-color: #191919; color: #E0E0E0;}',
+            'p {color: #E0E0E0;}'
+        ]
+    });
 
     var path = window.location.pathname;
     console.log(path);
 
-    function debounce(func, wait) {
-        var timeout;
-
-        return function executedFunction() {
-            var context = this;
-            var args = arguments;
-
-            var later = function() {
-                timeout = null;
-                func.apply(context, args);
-            };
-
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    };
+    var currentContent = "";
+    var saveTimeout = null;
+    var saveDelay = 2000; // Save delay in milliseconds
 
     function saveContent() {
-        var currentContent = editor.getData();
-
-        // Only save the content if it's different from the last saved content
-        if(currentContent !== lastSavedContent) {
+        var content = editor.getData();
+        if(content !== currentContent) {
+            currentContent = content;
             $.ajax({
                 url: '/api' + path,
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({
                     path: path,
-                    content: currentContent
+                    content: content
                 }),
                 success: function() {
                     console.log('Saved');
-                    lastSavedContent = currentContent;
-                    loadContent();
                 }
             });
         }
@@ -67,15 +71,28 @@
             success: function(data) {
                 console.log("get ok")
                 console.log(data)
+                currentContent = data.content;
                 editor.setData(data.content);
-                lastSavedContent = data.content;
             }
         });
     }
 
-    loadContent();
-    var saveContentDebounced = debounce(saveContent, 2000);
-    editor.on('change', saveContentDebounced);
+    CKEDITOR.on('instanceReady',
+        function( evt )
+        {
+            var editor = evt.editor;
+            editor.execCommand('maximize');
+            loadContent(); // Load content after editor is ready
+        });
+
+    editor.on('change', function() {
+        clearTimeout(saveTimeout);
+        saveTimeout = setTimeout(saveContent, saveDelay);
+    });
+
+    document.getElementById('dark-mode-toggle').addEventListener('click', function() {
+        document.body.classList.toggle('light-mode');
+    });
 </script>
 </body>
 </html>
