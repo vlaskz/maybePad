@@ -3,6 +3,7 @@
 <head>
     <title>MaybePad</title>
     <script src="https://cdn.ckeditor.com/4.16.2/full-all/ckeditor.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             color: #000;
@@ -33,7 +34,12 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
-    var editor = CKEDITOR.replace('editor');
+    var editor = CKEDITOR.replace('editor', {
+        font_names: 'Arial;Times New Roman;Verdana;Roboto;Ubuntu Mono',
+        contentsCss: [
+            'body { font-family: "Ubuntu Mono", monospace; font-size: 22px; }'
+        ]
+    });
 
     var path = window.location.pathname;
     console.log(path);
