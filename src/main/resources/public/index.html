@@ -9,6 +9,7 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
     var editor = CKEDITOR.replace('editor');
+    var lastSavedContent;
 
     CKEDITOR.on('instanceReady',
         function( evt )
@@ -19,21 +20,44 @@
 
     var path = window.location.pathname;
     console.log(path);
+
+    function debounce(func, wait) {
+        var timeout;
+
+        return function executedFunction() {
+            var context = this;
+            var args = arguments;
+
+            var later = function() {
+                timeout = null;
+                func.apply(context, args);
+            };
+
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    };
+
     function saveContent() {
-        var content = editor.getData();
-        $.ajax({
-            url: '/api' + path,
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                path: path,
-                content: content
-            }),
-            success: function() {
-                console.log('Saved');
-                loadContent();
-            }
-        });
+        var currentContent = editor.getData();
+
+        // Only save the content if it's different from the last saved content
+        if(currentContent !== lastSavedContent) {
+            $.ajax({
+                url: '/api' + path,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    path: path,
+                    content: currentContent
+                }),
+                success: function() {
+                    console.log('Saved');
+                    lastSavedContent = currentContent;
+                    loadContent();
+                }
+            });
+        }
     }
 
     function loadContent() {
@@ -44,12 +68,14 @@
                 console.log("get ok")
                 console.log(data)
                 editor.setData(data.content);
+                lastSavedContent = data.content;
             }
         });
     }
 
     loadContent();
-    setInterval(saveContent, 5000);
+    var saveContentDebounced = debounce(saveContent, 2000);
+    editor.on('change', saveContentDebounced);
 </script>
 </body>
 </html>
