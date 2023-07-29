@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html style="height: 100%; margin: 0; padding: 0;">
 <head>
     <title>MaybePad</title>
-    <script src="https://cdn.ckeditor.com/4.16.2/full-all/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -10,21 +10,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 100%;
             margin: 0;
+            padding: 0;
         }
 
         #editor-container {
-            width: 75%;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .cke_maximized {
-            max-width: 100% !important;
-            margin: auto !important;
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
@@ -34,65 +27,67 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
-    var editor = CKEDITOR.replace('editor', {
-        font_names: 'Arial;Times New Roman;Verdana;Roboto;Ubuntu Mono',
-        contentsCss: [
-            'body { font-family: "Ubuntu Mono", monospace; font-size: 22px; }'
-        ]
-    });
-
-    var path = window.location.pathname;
-    console.log(path);
-
-    var currentContent = "";
-    var saveTimeout = null;
-    var saveDelay = 2000; // Save delay in milliseconds
-
-    function saveContent() {
-        var content = editor.getData();
-        if(content !== currentContent) {
-            currentContent = content;
-            $.ajax({
-                url: '/api' + path,
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    path: path,
-                    content: content
-                }),
-                success: function() {
-                    console.log('Saved');
-                }
-            });
-        }
-    }
-
-    function loadContent() {
-        $.ajax({
-            url: '/api' + path,
-            type: 'GET',
-            success: function(data) {
-                console.log("get ok")
-                console.log(data)
-                currentContent = data.content;
-                editor.setData(data.content);
+    ClassicEditor
+        .create(document.querySelector('#editor'), {
+            fontColor: {
+                colors: [
+                    {
+                        color: 'hsl(0, 0%, 0%)',
+                        label: 'Black'
+                    }
+                ]
             }
-        });
-    }
+        })
+        .then(editor => {
+            var path = window.location.pathname;
+            console.log(path);
 
-    CKEDITOR.on('instanceReady',
-        function( evt )
-        {
-            var editor = evt.editor;
-            editor.execCommand('maximize');
+            var currentContent = "";
+            var saveTimeout = null;
+            var saveDelay = 2000; // Save delay in milliseconds
+
+            function saveContent() {
+                var content = editor.getData();
+                if(content !== currentContent) {
+                    currentContent = content;
+                    $.ajax({
+                        url: '/api' + path,
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({
+                            path: path,
+                            content: content
+                        }),
+                        success: function() {
+                            console.log('Saved');
+                        }
+                    });
+                }
+            }
+
+            function loadContent() {
+                $.ajax({
+                    url: '/api' + path,
+                    type: 'GET',
+                    success: function(data) {
+                        console.log("get ok")
+                        console.log(data)
+                        currentContent = data.content;
+                        editor.setData(data.content);
+                    }
+                });
+            }
+
+            editor.model.document.on('change:data', () => {
+                clearTimeout(saveTimeout);
+                saveTimeout = setTimeout(saveContent, saveDelay);
+            });
+
             loadContent(); // Load content after editor is ready
+        })
+        .catch(error => {
+            console.error(error);
         });
-
-    editor.on('change', function() {
-        clearTimeout(saveTimeout);
-        saveTimeout = setTimeout(saveContent, saveDelay);
-    });
-
 </script>
 </body>
 </html>

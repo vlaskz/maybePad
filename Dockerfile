@@ -8,4 +8,4 @@ WORKDIR /app
 COPY /target/maybePad-0.0.1-SNAPSHOT.jar /app/maybePad-0.0.1-SNAPSHOT.jar
 
 # Set the startup command to execute your application
-CMD ["java", "-jar", "/app/maybepad-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "/app/maybePad-0.0.1-SNAPSHOT.jar"]
