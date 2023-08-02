@@ -4,10 +4,13 @@ package com.vlaskz.maybepad.Page;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import lombok.Builder;
 import lombok.Data;
 
 @Entity
 @Data
+@Builder
 public class Page {
 
     @Id
@@ -16,6 +19,7 @@ public class Page {
     private String parentId;
 
     @Column(length = 100000)
+    @Lob
     private String content;
 
     public Page() {
