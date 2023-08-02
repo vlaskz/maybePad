@@ -5,12 +5,20 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Page {
 
     @Id
@@ -19,30 +27,14 @@ public class Page {
     private String parentId;
 
     @Column(length = 100000)
-    @Lob
     private String content;
 
-    public Page() {
-    }
+    @CreationTimestamp
+    @Column(name = "creationDateTime", nullable = false, updatable = false)
+    private LocalDateTime creationDateTime;
 
-    public Page(String path, String content) {
-        this.path = path;
-        this.content = content;
-    }
+    @UpdateTimestamp
+    @Column(name = "lastUpdate", nullable = false)
+    private LocalDateTime lastUpdate;
 
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
 }
