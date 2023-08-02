@@ -1,17 +1,7 @@
 <!DOCTYPE html>
 <html style="height: 100%; margin: 0; padding: 0;">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FBBVJ554L4"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-FBBVJ554L4');
-    </script>
     <title>MaybePad</title>
-    <script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -34,69 +24,83 @@
 <div id="editor-container">
     <textarea name="editor" id="editor"></textarea>
 </div>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<!-- Deferred Loading of Scripts -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FBBVJ554L4"></script>
+<script async src="./ckeditor.js"></script>
+<script async src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
-    ClassicEditor
-        .create(document.querySelector('#editor'), {
-            fontColor: {
-                colors: [
-                    {
-                        color: 'hsl(0, 0%, 0%)',
-                        label: 'Black'
+    // This function will run when all the async scripts have been loaded
+    window.onload = function () {
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'G-FBBVJ554L4');
+
+        ClassicEditor
+            .create(document.querySelector('#editor'), {
+                fontColor: {
+                    colors: [
+                        {
+                            color: 'hsl(0, 0%, 0%)',
+                            label: 'Black'
+                        }
+                    ]
+                }
+            })
+            .then(editor => {
+                var path = window.location.pathname;
+                console.log(path);
+
+                var currentContent = "";
+                var saveTimeout = null;
+                var saveDelay = 2000; // Save delay in milliseconds
+
+                function saveContent() {
+                    var content = editor.getData();
+                    if(content !== currentContent) {
+                        currentContent = content;
+                        $.ajax({
+                            url: '/api' + path,
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                path: path,
+                                content: content
+                            }),
+                            success: function() {
+                                console.log('Saved');
+                            }
+                        });
                     }
-                ]
-            }
-        })
-        .then(editor => {
-            var path = window.location.pathname;
-            console.log(path);
+                }
 
-            var currentContent = "";
-            var saveTimeout = null;
-            var saveDelay = 2000; // Save delay in milliseconds
-
-            function saveContent() {
-                var content = editor.getData();
-                if(content !== currentContent) {
-                    currentContent = content;
+                function loadContent() {
                     $.ajax({
                         url: '/api' + path,
-                        type: 'POST',
-                        contentType: 'application/json',
-                        data: JSON.stringify({
-                            path: path,
-                            content: content
-                        }),
-                        success: function() {
-                            console.log('Saved');
+                        type: 'GET',
+                        success: function(data) {
+                            console.log("get ok")
+                            console.log(data)
+                            currentContent = data.content;
+                            editor.setData(data.content);
                         }
                     });
                 }
-            }
 
-            function loadContent() {
-                $.ajax({
-                    url: '/api' + path,
-                    type: 'GET',
-                    success: function(data) {
-                        console.log("get ok")
-                        console.log(data)
-                        currentContent = data.content;
-                        editor.setData(data.content);
-                    }
+                editor.model.document.on('change:data', () => {
+                    clearTimeout(saveTimeout);
+                    saveTimeout = setTimeout(saveContent, saveDelay);
                 });
-            }
 
-            editor.model.document.on('change:data', () => {
-                clearTimeout(saveTimeout);
-                saveTimeout = setTimeout(saveContent, saveDelay);
+                loadContent(); // Load content after editor is ready
+            })
+            .catch(error => {
+                console.error(error);
             });
-
-            loadContent(); // Load content after editor is ready
-        })
-        .catch(error => {
-            console.error(error);
-        });
+    };
 </script>
 </body>
 </html>
