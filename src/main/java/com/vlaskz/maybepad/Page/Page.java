@@ -27,7 +27,7 @@ public class Page {
 
     private String parentId;
 
-    @Column(length=1000000000)
+    @Column(length=100000000)
     private String content;
 
     @CreationTimestamp
