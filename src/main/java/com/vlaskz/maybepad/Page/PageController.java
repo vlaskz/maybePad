@@ -5,8 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/api")
 public class PageController {
@@ -22,8 +20,8 @@ public class PageController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<Page> getHelpPage(){
-        return new ResponseEntity<>(pageRepository.findByPath(homeId), HttpStatus.OK);
+    public String getHomePage(){
+        return "home";
     }
     @GetMapping("/{path}/**")
     public ResponseEntity<Page> getPage(@PathVariable String path) {
