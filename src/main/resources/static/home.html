@@ -5,6 +5,17 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO: meta tags -->
+  <meta name="description" content="MaybePad - Seu espaço para rascunhos, ideias e mais.">
+  <meta name="keywords" content="rascunhos, notas, ideias, escrita rápida">
+  <meta name="robots" content="index,follow">
+  <meta name="author" content="MaybePad Team">
+  <meta property="og:title" content="MaybePad - Seu espaço para rascunhos e ideias">
+  <meta property="og:description" content="Crie páginas instantâneas para anotações, rascunhos e mais.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="URL_DA_IMAGEM_PREVIEW"> <!-- Coloque a URL de uma imagem de preview aqui -->
+
   <title>MaybePad - Início</title>
 
   <!-- Bootstrap CSS -->
@@ -16,12 +27,43 @@
   <style>
     body {
       font-family: 'Roboto', sans-serif;
-      background-color: #f5f5f5;
+      background: linear-gradient(45deg, #3498db, #9b59b6);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      color: white;
       padding: 5% 10%;
     }
 
-    h1, p {
-      text-align: center;
+    h1 {
+      color: white;
+      font-weight: 700;
+      font-size: 2.5rem;
+    }
+
+    .container {
+      background-color: rgba(0,0,0,0.3);
+      backdrop-filter: blur(10px); /* desfoca o fundo */
+      padding: 5%;
+      border-radius: 8px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .btn-outline-secondary {
+      border-color: white;
+      color: white;
+    }
+
+    .btn-outline-secondary:hover {
+      background-color: white;
+      color: #3498db;
+    }
+
+    .help {
+      font-style: italic;
+      font-size: 0.9rem;
     }
 
   </style>
@@ -29,21 +71,27 @@
 
 <body>
 
-<h1>MaybePad</h1>
-<p class="lead mt-4">Seu espaço para rascunhos, ideias, ou qualquer coisa que talvez você queira guardar.</p>
+<div class="container">
+  <h1>MaybePad</h1>
+  <p class="lead mt-4">Seu espaço para rascunhos, ideias, ou qualquer coisa que talvez você queira guardar.</p>
 
-<div class="mt-5">
-  <p class="h4">Comece a escrever:</p>
-  <div class="input-group input-group-lg mb-3">
-    <input type="text" class="form-control" id="pathInput" placeholder="Digite seu caminho desejado aqui..." aria-label="Recipient's username" aria-describedby="basic-addon2">
-    <div class="input-group-append">
-      <button class="btn btn-outline-secondary" type="button" onclick="redirectToPath()">Ir</button>
+  <div class="mt-5">
+    <p class="h4">Comece a escrever:</p>
+    <div class="input-group input-group-lg mb-3">
+      <input type="text" class="form-control" id="pathInput" placeholder="Digite seu caminho desejado aqui..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button" onclick="redirectToPath()">Ir</button>
+      </div>
     </div>
-  </div>
 
-  <p class="mt-4">
-    Aqui no MaybePad, você pode criar páginas instantâneas para anotações, rascunhos ou qualquer outro conteúdo. Simplesmente digite um caminho acima e comece a escrever. Seu conteúdo estará lá sempre que você retornar.
-  </p>
+    <p class="help">
+      Dica: Você não precisa criar uma conta ou fazer login. Apenas digite um caminho no campo acima e você terá sua própria página para anotações. Tente algo como "minha-lista-de-compras" ou "ideias-para-o-projeto".
+    </p>
+
+    <p class="mt-4">
+      Aqui no MaybePad, você pode criar páginas instantâneas para anotações, rascunhos ou qualquer outro conteúdo. Simplesmente digite um caminho acima e comece a escrever. Seu conteúdo estará lá sempre que você retornar.
+    </p>
+  </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
