@@ -1,4 +1,4 @@
-package com.vlaskz.maybepad.Page;
+package com.vlaskz.maybepad.core.Page;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,4 +1,4 @@
-package com.vlaskz.maybepad.Page;
+package com.vlaskz.maybepad.core.Page;
 
 
 import jakarta.persistence.Column;

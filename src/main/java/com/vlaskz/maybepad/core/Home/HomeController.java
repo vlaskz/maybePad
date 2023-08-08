@@ -1,4 +1,4 @@
-package com.vlaskz.maybepad.Home;
+package com.vlaskz.maybepad.core.Home;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
