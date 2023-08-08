@@ -31,11 +31,11 @@ public class Page {
     private String content;
 
     @CreationTimestamp
-    @Column(name = "creationDateTime", nullable = false, updatable = false)
+    @Column(name = "creationDateTime", nullable = true, updatable = false)
     private LocalDateTime creationDateTime;
 
     @UpdateTimestamp
-    @Column(name = "lastUpdate", nullable = false)
+    @Column(name = "lastUpdate", nullable = true)
     private LocalDateTime lastUpdate;
 
 }

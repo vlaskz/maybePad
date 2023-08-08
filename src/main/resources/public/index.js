@@ -24,6 +24,7 @@ checkDisclaimerCookie(); // Executando a verificação no carregamento da págin
 
 // This function will run when all the async scripts have been loaded
 window.onload = function () {
+    document.title = 'Maybepad' + window.location.pathname;
     window.dataLayer = window.dataLayer || [];
     function gtag() {
         dataLayer.push(arguments);
