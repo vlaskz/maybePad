@@ -39,7 +39,11 @@
     h1 {
       color: white;
       font-weight: 700;
-      font-size: 2.5rem;
+      font-size: 3.5rem;
+    }
+
+    p, .help {
+      font-size: 1.2rem;
     }
 
     .container {
@@ -63,7 +67,6 @@
 
     .help {
       font-style: italic;
-      font-size: 0.9rem;
     }
 
   </style>
@@ -78,7 +81,7 @@
   <div class="mt-5">
     <p class="h4">Comece a escrever:</p>
     <div class="input-group input-group-lg mb-3">
-      <input type="text" class="form-control" id="pathInput" placeholder="Digite seu caminho desejado aqui..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+      <input type="text" class="form-control" id="pathInput" placeholder="Digite seu caminho desejado aqui..." aria-label="Recipient's username" aria-describedby="basic-addon2" onkeyup="handleKeyUp(event)">
       <div class="input-group-append">
         <button class="btn btn-outline-secondary" type="button" onclick="redirectToPath()">Ir</button>
       </div>
@@ -105,7 +108,14 @@
       window.location.href = '/' + path;
     }
   }
+
+  function handleKeyUp(event) {
+    if (event.keyCode === 13) {
+      redirectToPath();
+    }
+  }
 </script>
+
 </body>
 
 </html>
