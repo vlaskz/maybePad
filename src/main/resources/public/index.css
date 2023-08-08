@@ -12,7 +12,7 @@ body, html {
 #editor-container {
     position: relative; /* Defina como relativo */
     width: 100%;
-    height: calc(100% - 50px); /* Desconta o tamanho aproximado da barra de disclaimer */
+   /*height: calc(100% - 50px); /* Desconta o tamanho aproximado da barra de disclaimer */
     overflow: hidden; /* Isso irá esconder qualquer overflow */
 }
 
@@ -24,7 +24,7 @@ textarea#editor {
     outline: none; /* Remove o contorno ao focar no textarea */
     padding: 20px; /* Adiciona algum padding para tornar o texto mais legível */
     box-sizing: border-box; /* Isso fará com que o padding não afete a dimensão total do textarea */
-    font-family: 'Roboto', sans-serif; /* Use a fonte que preferir */
+    font-family: 'Lucida Console', sans-serif; /* Use a fonte que preferir */
     font-size: 16px;
 }
 
