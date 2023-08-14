@@ -45,7 +45,7 @@ window.onload = function () {
         })
         .then(editor => {
             var path = window.location.pathname;
-            console.log(path);
+            console.log("loaded editor in path: ", path);
 
             var currentContent = "";
             var saveTimeout = null;
@@ -55,6 +55,7 @@ window.onload = function () {
                 var content = editor.getData();
                 if(content !== currentContent) {
                     currentContent = content;
+                    console.log("requesting save in path: ", path)
                     $.ajax({
                         url: '/api' + path,
                         type: 'POST',
@@ -71,6 +72,7 @@ window.onload = function () {
             }
 
             function loadContent() {
+                console.log("requesting load in path: ", path)
                 $.ajax({
                     url: '/api' + path,
                     type: 'GET',
