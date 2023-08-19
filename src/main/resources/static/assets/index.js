@@ -14,6 +14,19 @@ function closeDisclaimer() {
     document.cookie = "disclaimer_closed=true; path=/; max-age=86400";  // Cookie válido por 1 dia
 }
 
+
+    // Fetch the subpaths and populate the sidebar
+    $(document).ready(function() {
+    $.get('/api/subitems?path=' + window.location.pathname, function(data) {
+        data.forEach(function(path) {
+            $('#subpaths').append('<a href="' + path + '" class="d-block mb-1">' + path + '</a>');
+        });
+    });
+});
+
+
+
+
 function checkDisclaimerCookie() {
     if (document.cookie.split(';').some((item) => item.trim().startsWith('disclaimer_closed='))) {
         document.querySelector(".disclaimer").style.display = 'none';

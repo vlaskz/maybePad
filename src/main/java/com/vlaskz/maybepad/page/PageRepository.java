@@ -11,8 +11,6 @@ import java.util.List;
 public interface PageRepository extends JpaRepository<Page, String> {
 
     Page findByPath(String path);
-    List<Page> findByParentId(String parentId);
-
     @Query("SELECT p.path FROM Page p WHERE p.path LIKE CONCAT(:pathPrefix, '/%') AND p.path <> :pathPrefix")
     List<String> findPathsStartingWith(@Param("pathPrefix") String pathPrefix);
 

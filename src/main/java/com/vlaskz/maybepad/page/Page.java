@@ -1,9 +1,8 @@
 package com.vlaskz.maybepad.page;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.vlaskz.maybepad.owner.Owner;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,17 +22,23 @@ public class Page {
     @Id
     private String path;
 
-    private String parentId;
+    @Builder.Default
+    @Column(name = "isLocked", nullable = false, columnDefinition = "boolean default false")
+    private Boolean isLocked = false;
 
-    @Column(length=100000000)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "owner_id")
+    private Owner owner;
+
+    @Column(length = 100000000)
     private String content;
 
     @CreationTimestamp
-    @Column(name = "creationDateTime", nullable = true, updatable = false)
+    @Column(name = "creationDateTime", updatable = false)
     private LocalDateTime creationDateTime;
 
     @UpdateTimestamp
-    @Column(name = "lastUpdate", nullable = true)
+    @Column(name = "lastUpdate")
     private LocalDateTime lastUpdate;
 
 }
