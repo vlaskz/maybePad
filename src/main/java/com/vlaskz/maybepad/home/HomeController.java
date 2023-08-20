@@ -4,6 +4,8 @@ import com.vlaskz.maybepad.utils.Utils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.IOException;
 
 @Controller
+@Slf4j(topic = "HomeController")
 public class HomeController {
 
     @Autowired
@@ -26,23 +29,28 @@ public class HomeController {
     @GetMapping("/")
     @ResponseBody
     public Resource home() {
+        log.info("serving home");
         return new ClassPathResource("static/home.html");
     }
 
     @GetMapping("/assets/{filename:.+}")
     @ResponseBody
     public ResponseEntity<Resource> serveAsset(@PathVariable String filename) {
+        log.info("serving assets for resource {}", filename);
         Resource asset = new ClassPathResource("static/assets/" + filename);
         return ResponseEntity.ok().body(asset);
     }
     @RequestMapping("/**")
     public ResponseEntity<Resource> handleRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        log.info("serving dynamic route for request {}", request);
         String originalPath = request.getRequestURI();
+        System.out.println("called root route");
         String normalizedPath = Utils.normalizePath(originalPath);
 
         // Se o caminho normalizado é diferente do original, reescreva a URL.
         if (!originalPath.equals(normalizedPath)) {
-            request.getRequestDispatcher(normalizedPath).forward(request, response);
+//            request.getRequestDispatcher(normalizedPath).forward(request, response);
+            response.sendRedirect(normalizedPath);
             return null;  // Termina a execução do método após o redirecionamento.
         }
 

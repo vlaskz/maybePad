@@ -14,18 +14,15 @@ function closeDisclaimer() {
     document.cookie = "disclaimer_closed=true; path=/; max-age=86400";  // Cookie válido por 1 dia
 }
 
-
-    // Fetch the subpaths and populate the sidebar
-    $(document).ready(function() {
-    $.get('/api/subitems?path=' + window.location.pathname, function(data) {
+// Fetch the subpaths and populate the sidebar
+$(document).ready(function() {
+    // Alterado para /api/pages/subitems
+    $.get('/api/pages/subitems?path=' + window.location.pathname, function(data) {
         data.forEach(function(path) {
             $('#subpaths').append('<a href="' + path + '" class="d-block mb-1">' + path + '</a>');
         });
     });
 });
-
-
-
 
 function checkDisclaimerCookie() {
     if (document.cookie.split(';').some((item) => item.trim().startsWith('disclaimer_closed='))) {
@@ -68,9 +65,10 @@ window.onload = function () {
                 var content = editor.getData();
                 if(content !== currentContent) {
                     currentContent = content;
-                    console.log("requesting save in path: ", path)
+                    console.log("requesting save in path: ", path);
+                    // Alterado para /api/pages
                     $.ajax({
-                        url: '/api' + path,
+                        url: '/api/pages/save_page?path=' + path,
                         type: 'POST',
                         contentType: 'application/json',
                         data: JSON.stringify({
@@ -85,9 +83,10 @@ window.onload = function () {
             }
 
             function loadContent() {
-                console.log("requesting load in path: ", path)
+                console.log("requesting load in path: ", path);
+                // Alterado para /api/pages
                 $.ajax({
-                    url: '/api' + path,
+                    url: '/api/pages/get_page?path=' + path,
                     type: 'GET',
                     success: function(data) {
                         console.log("get ok");

@@ -1,5 +1,6 @@
 package com.vlaskz.maybepad.owner;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vlaskz.maybepad.page.Page;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -41,6 +42,7 @@ public class Owner {
     private LocalDateTime lastUpdate;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonManagedReference
     private List<Page> pages = new ArrayList<>();
 
 }

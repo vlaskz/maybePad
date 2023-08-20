@@ -1,6 +1,7 @@
 package com.vlaskz.maybepad.page;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.vlaskz.maybepad.owner.Owner;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,7 +29,8 @@ public class Page {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "owner_id")
-    private Owner owner;
+    @JsonBackReference
+    private Owner owner = Owner.builder().id(1L).build();
 
     @Column(length = 100000000)
     private String content;
