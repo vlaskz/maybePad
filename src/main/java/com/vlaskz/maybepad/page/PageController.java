@@ -16,9 +16,6 @@ public class PageController {
 
     String removeLastBar(String url){
         log.info("#removeLastBar");
-        String newUrl = url.substring(0,url.length()-1);
-        System.out.println("url="+url+"\nnewUrl="+newUrl);
-        System.out.println();
         if(url.endsWith("/")){
             return url.substring(0, url.length()-1);
         }

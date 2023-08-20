@@ -23,9 +23,6 @@ import java.io.IOException;
 @Slf4j(topic = "HomeController")
 public class HomeController {
 
-    @Autowired
-    private ResourceLoader resourceLoader;
-
     @GetMapping("/")
     @ResponseBody
     public Resource home() {
@@ -41,21 +38,17 @@ public class HomeController {
         return ResponseEntity.ok().body(asset);
     }
     @RequestMapping("/**")
-    public ResponseEntity<Resource> handleRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public ResponseEntity<Resource> handleRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
         log.info("serving dynamic route for request {}", request);
         String originalPath = request.getRequestURI();
         System.out.println("called root route");
         String normalizedPath = Utils.normalizePath(originalPath);
 
-        // Se o caminho normalizado é diferente do original, reescreva a URL.
         if (!originalPath.equals(normalizedPath)) {
-//            request.getRequestDispatcher(normalizedPath).forward(request, response);
             response.sendRedirect(normalizedPath);
-            return null;  // Termina a execução do método após o redirecionamento.
+            return null;
         }
 
-        // Se o caminho é o mesmo (ou já foi reescrito anteriormente),
-        // servimos o conteúdo de index.html mantendo a URL.
         Resource indexFile = new ClassPathResource("static/defaultPage.html");
         return ResponseEntity.ok().body(indexFile);
     }
