@@ -1,6 +1,8 @@
 package com.vlaskz.maybepad.interceptors;
 
+import com.vlaskz.maybepad.interceptors.annotations.IgnoreInterceptor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -12,6 +14,16 @@ public class PathNormalizationInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        // Se o handler é uma instância de HandlerMethod, nós podemos obter informações sobre o método/controlador.
+        if (handler instanceof HandlerMethod) {
+            HandlerMethod handlerMethod = (HandlerMethod) handler;
+
+            // Verifique se a anotação IgnoreInterceptor está presente no método
+            if (handlerMethod.getMethod().isAnnotationPresent(IgnoreInterceptor.class)) {
+                return true; // Ignore este interceptor para esse método
+            }
+        }
+
         String originalPath = request.getRequestURI();
         String normalizedPath = normalizePath(originalPath);
 

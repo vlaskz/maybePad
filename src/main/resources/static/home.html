@@ -5,53 +5,53 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- SEO: meta tags -->
-  <meta name="description" content="MaybePad - Seu espaço para rascunhos, ideias e mais.">
-  <meta name="keywords" content="rascunhos, notas, ideias, escrita rápida">
+  <meta name="description" content="MaybePad - Your space for drafts, ideas, and more.">
+  <meta name="keywords" content="drafts, notes, ideas, quick writing">
   <meta name="robots" content="index,follow">
   <meta name="author" content="MaybePad Team">
-  <meta property="og:title" content="MaybePad - Seu espaço para rascunhos e ideias">
-  <meta property="og:description" content="Crie páginas instantâneas para anotações, rascunhos e mais.">
+  <meta property="og:title" content="MaybePad - Your space for drafts and ideas">
+  <meta property="og:description" content="Instantly create pages for notes, drafts, and more.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="URL_DA_IMAGEM_PREVIEW"> <!-- Coloque a URL de uma imagem de preview aqui -->
+  <meta property="og:image" content="URL_OF_PREVIEW_IMAGE">
 
-  <title>MaybePad - Início</title>
-
-  <!-- Bootstrap CSS -->
+  <title>MaybePad - Home</title>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Fonte Roboto do Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
+
   <style>
+
+    body, h1, h2, h3, h4, p {
+      font-family: 'Inter', sans-serif;
+    }
+
     body {
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(45deg, #3498db, #9b59b6);
-      height: 100vh;
+
+      background: linear-gradient(45deg, #6caad9, #9d6bb4);
+      height: auto;
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
       color: white;
       padding: 5% 10%;
     }
 
     h1 {
-      color: white;
-      font-weight: 700;
       font-size: 3.5rem;
+      align: center;
     }
 
-    p, .help {
+    p,
+    .help {
       font-size: 1.2rem;
     }
 
-    .container {
-      background-color: rgba(0,0,0,0.3);
-      backdrop-filter: blur(10px); /* desfoca o fundo */
+    .container,
+    .features-container {
+      background-color: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
       padding: 5%;
       border-radius: 8px;
-      max-width: 800px;
+      max-width: 1000px;
       margin: auto;
     }
 
@@ -69,38 +69,120 @@
       font-style: italic;
     }
 
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      margin-top: 2rem;
+    }
   </style>
 </head>
 
 <body>
 
 <div class="container">
-  <h1>MaybePad</h1>
-  <p class="lead mt-4">Seu espaço para rascunhos, ideias, ou qualquer coisa que talvez você queira guardar.</p>
+  <h1>Welcome to MaybePad</h1>
+  <p class="lead mt-6">Your space for drafts, ideas, or anything else you might want to save. Start by typing a path below and get your own note page instantly. No account or login required.</p>
 
-  <div class="mt-5">
-    <p class="h4">Comece a escrever:</p>
-    <div class="input-group input-group-lg mb-3">
-      <input type="text" class="form-control" id="pathInput" placeholder="Digite seu caminho desejado aqui..." aria-label="Recipient's username" aria-describedby="basic-addon2" onkeyup="handleKeyUp(event)">
-      <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="button" onclick="redirectToPath()">Ir</button>
-      </div>
+  <div class="input-group input-group-lg mt-4">
+    <input type="text" class="form-control" id="pathInput" placeholder="Enter your desired path here" aria-label="Recipient's username" aria-describedby="basic-addon2" onkeyup="handleKeyUp(event)">
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" type="button" onclick="redirectToPath()">Go</button>
     </div>
+  </div>
 
-    <p class="help">
-      Dica: Você não precisa criar uma conta ou fazer login. Apenas digite um caminho no campo acima e você terá sua própria página para anotações. Tente algo como "minha-lista-de-compras" ou "ideias-para-o-projeto".
-    </p>
+  <p class="help mt-3">
+    Tip: Try paths like "shopping-list" or "project-ideas". Your content will be there whenever you come back.
+  </p>
+</div>
 
-    <p class="mt-4">
-      Aqui no MaybePad, você pode criar páginas instantâneas para anotações, rascunhos ou qualquer outro conteúdo. Simplesmente digite um caminho acima e comece a escrever. Seu conteúdo estará lá sempre que você retornar.
-    </p>
+<div class="features-container mt-5">
+  <h2 class="text-center mb-4">Key Features</h2>
+  <div class="row">
+    <!-- First Feature -->
+    <div class="col-md-4 text-center">
+      <!-- Icon -->
+
+      <!-- [SVG CONTENT FOR THE FIRST ICON] -->
+      <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+        <!-- Level 1: Root Node -->
+        <circle cx="50" cy="15" r="7.5" fill="#3498db" />
+
+        <!-- Level 2: Child Nodes -->
+        <circle cx="30" cy="45" r="7.5" fill="#9b59b6" />
+        <circle cx="70" cy="45" r="7.5" fill="#9b59b6" />
+
+        <!-- Connecting Lines for Level 1 and 2 -->
+        <line x1="50" y1="22.5" x2="30" y2="37.5" stroke="gray" stroke-width="1" />
+        <line x1="50" y1="22.5" x2="70" y2="37.5" stroke="gray" stroke-width="1" />
+
+        <!-- Level 3: Grandchild Nodes -->
+        <circle cx="15" cy="75" r="7.5" fill="#e74c3c" />
+        <circle cx="45" cy="75" r="7.5" fill="#e74c3c" />
+        <circle cx="55" cy="75" r="7.5" fill="#e74c3c" />
+        <circle cx="85" cy="75" r="7.5" fill="#e74c3c" />
+
+        <!-- Connecting Lines for Level 2 and 3 -->
+        <line x1="30" y1="52.5" x2="15" y2="67.5" stroke="gray" stroke-width="1" />
+        <line x1="30" y1="52.5" x2="45" y2="67.5" stroke="gray" stroke-width="1" />
+        <line x1="70" y1="52.5" x2="55" y2="67.5" stroke="gray" stroke-width="1" />
+        <line x1="70" y1="52.5" x2="85" y2="67.5" stroke="gray" stroke-width="1" />
+      </svg>
+      <!-- Brief Description -->
+      <h4 class="mt-3">Organized Thoughts</h4>
+      <!-- Mode of Use -->
+      <p>Create organized sub-routes for related notes. Think of it as chapters in a book. To use, simply group notes under a parent category.</p>
+    </div>
+    <!-- Second Feature -->
+    <div class="col-md-4 text-center">
+      <!-- Icon -->
+
+      <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+        <!-- Outer casing of the floppy disk -->
+        <rect x="15" y="15" width="70" height="70" fill="#3498db" rx="8" ry="8" />
+
+        <!-- Label section at the top -->
+        <rect x="15" y="15" width="70" height="20" fill="#9b59b6" rx="8" ry="8" />
+
+        <!-- Write-protect notch on the right side -->
+        <rect x="70" y="40" width="10" height="10" fill="#e74c3c" />
+
+        <!-- Circle in the center for the center metal hub -->
+        <circle cx="50" cy="50" r="8" fill="#e74c3c" />
+
+        <!-- Rectangular shutter at the bottom -->
+        <rect x="30" y="70" width="40" height="10" fill="#e74c3c" rx="2" ry="2" />
+      </svg>
+
+      <!-- Brief Description -->
+      <h4 class="mt-3">Instant Saving</h4>
+      <!-- Mode of Use -->
+      <p>Save your notes instantly as you type. There's no need to look for a save button. Simply begin typing and your changes are preserved.</p>
+    </div>
+    <!-- Third Feature -->
+    <div class="col-md-4 text-center">
+      <!-- Icon -->
+      <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="10" width="80" height="60" fill="#3498db" />
+        <polygon points="10,70 50,30 90,70" fill="#9b59b6" />
+        <circle cx="80" cy="20" r="8" fill="#e74c3c"/>
+      </svg>
+        <!-- [SVG CONTENT FOR THE THIRD ICON] -->
+      </svg>
+      <!-- Brief Description -->
+      <h4 class="mt-3">Add Images</h4>
+      <!-- Mode of Use -->
+      <p>Add images directly to your notes to better visualize your ideas. Click on the image icon, and upload or link to your desired visual.</p>
+    </div>
   </div>
 </div>
+
+<footer class="mt-5">
+  &copy; I. Velasquez
+</footer>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 <script>
   function redirectToPath() {
     const path = document.getElementById('pathInput').value.trim();
@@ -115,7 +197,5 @@
     }
   }
 </script>
-
 </body>
-
 </html>

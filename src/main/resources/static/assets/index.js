@@ -13,14 +13,21 @@ function closeDisclaimer() {
     document.querySelector(".disclaimer").style.display = 'none';
     document.cookie = "disclaimer_closed=true; path=/; max-age=86400";  // Cookie válido por 1 dia
 }
-
 // Fetch the subpaths and populate the sidebar
 $(document).ready(function() {
-    // Alterado para /api/pages/subitems
     $.get('/api/pages/subitems?path=' + window.location.pathname, function(data) {
-        data.forEach(function(path) {
-            $('#subpaths').append('<a href="' + path + '" class="d-block mb-1">' + path + '</a>');
-        });
+        if (data.length === 0) {
+            $('#sidebar').hide();
+            $('#editor-container').removeClass('col-md-10').addClass('col-md-12');
+        } else {
+            data.forEach(function(path, index) {
+                if (index === 0 && (path === '/' || window.location.pathname.startsWith(path))) {
+                    $('#subpaths').append('<a href="' + path + '" class="d-block mb-1">.. (Up One Level)</a>');
+                } else {
+                    $('#subpaths').append('<a href="' + path + '" class="d-block mb-1">' + path + '</a>');
+                }
+            });
+        }
     });
 });
 
@@ -108,3 +115,19 @@ window.onload = function () {
             console.error(error);
         });
 };
+
+// Verificar se o cookie de aceitação do disclaimer existe e ocultar o disclaimer se necessário
+$(document).ready(function() {
+    if (document.cookie.split(';').some((item) => item.trim().startsWith('disclaimerAccepted='))) {
+        $(".disclaimer").hide();
+    }
+});
+
+// Definir o cookie quando o usuário aceita o disclaimer
+$(".close").click(function() {
+    $(".disclaimer").hide(); // Esconder o disclaimer
+});
+
+$(".accept-eula").click(function() {
+    document.cookie = "disclaimerAccepted=true; max-age=31536000; path=/"; // Define o cookie para 1 ano
+});
