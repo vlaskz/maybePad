@@ -12,7 +12,7 @@ body, html {
 #editor-container {
     position: relative; /* Defina como relativo */
     width: 100%;
-   /*height: calc(100% - 50px); /* Desconta o tamanho aproximado da barra de disclaimer */
+    /*height: calc(100% - 50px); /* Desconta o tamanho aproximado da barra de disclaimer */
     overflow: hidden; /* Isso irá esconder qualquer overflow */
 }
 
@@ -72,3 +72,10 @@ button {
     display: block;
     margin: 20px auto 0;
 }
+
+
+#subpaths {
+    overflow-x: auto; /* Barra de rolagem horizontal */
+    white-space: nowrap; /* Evita quebras de linha */
+}
+

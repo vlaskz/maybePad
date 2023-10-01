@@ -1,5 +1,6 @@
 package com.vlaskz.maybepad.home;
 
+import com.vlaskz.maybepad.interceptors.annotations.IgnoreInterceptor;
 import com.vlaskz.maybepad.utils.Utils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,6 +26,7 @@ public class HomeController {
 
     @GetMapping("/")
     @ResponseBody
+    @IgnoreInterceptor
     public Resource home() {
         log.info("serving home");
         return new ClassPathResource("static/home.html");
@@ -32,6 +34,7 @@ public class HomeController {
 
     @GetMapping("/assets/{filename:.+}")
     @ResponseBody
+    @IgnoreInterceptor
     public ResponseEntity<Resource> serveAsset(@PathVariable String filename) {
         log.info("serving assets for resource {}", filename);
         Resource asset = new ClassPathResource("static/assets/" + filename);

@@ -45,6 +45,13 @@ public class PageController {
     public ResponseEntity<List<String>> getSubItems(@RequestParam("path") String path) {
         log.info("serving /subitems with path {}",path);
         List<String> subitems = pageRepository.findPathsStartingWith(removeLastBar(path));
+
+        // Adicione o caminho do nível acima se não estivermos já na raiz
+        if (!path.equals("/") && !path.equals("")) {
+            String parentPath = path.substring(0, path.lastIndexOf('/'));
+            subitems.add(0, parentPath.equals("") ? "/" : parentPath);  // Adiciona à primeira posição
+        }
+
         return ResponseEntity.ok(subitems);
     }
 }
