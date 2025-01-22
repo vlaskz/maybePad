@@ -1,1 +1,1 @@
-This project is now on MIT license. Please go ahead and do what you want. Just don't break everything.
+Thsi is a url-based text editor. It supports images, text and markdown. It is now opensource. The license is MIT.
