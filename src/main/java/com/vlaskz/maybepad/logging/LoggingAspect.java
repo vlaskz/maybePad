@@ -21,7 +21,7 @@ public class LoggingAspect {
             params.append(arg).append(", ");
         }
 
-        if (params.length() > 0) {
+        if (!params.isEmpty()) {
             params.setLength(params.length() - 2);  // Remove the last comma and space
         }
 
